@@ -1,52 +1,150 @@
-body { font-family: sans-serif; background: #222; color: #fff; margin: 0; overflow: hidden; }
-#login-screen { display: flex; flex-direction: column; align-items: center; margin-top: 100px; }
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+
+body { 
+    font-family: 'Comfortaa', cursive; /* Сказочный округлый шрифт */
+    background: radial-gradient(circle at center, #2b1d3d 0%, #0d0616 100%); /* Мистический градиент */
+    color: #e0d4ff; 
+    margin: 0; 
+    overflow: hidden; 
+}
+
+#login-screen { 
+    display: flex; flex-direction: column; align-items: center; 
+    justify-content: center; height: 100vh;
+    background: rgba(0,0,0,0.5);
+}
+
+h1 {
+    text-shadow: 0 0 10px #a74fff, 0 0 20px #a74fff; /* Неоновое свечение текста */
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px 20px; border-radius: 20px; border: none;
+    background: #4a3b69; color: white; font-family: inherit; font-size: 1.2em;
+    outline: none; text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+button {
+    margin-top: 20px; padding: 10px 30px;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    border: none; border-radius: 20px;
+    color: #5a2d38; font-weight: bold; cursor: pointer;
+    font-family: inherit; font-size: 1.1em;
+    transition: transform 0.1s, box-shadow 0.2s;
+}
+button:hover { transform: scale(1.05); box-shadow: 0 0 15px #ff9a9e; }
+
+/* Игровое поле */
 #board-container { 
     width: 100vw; height: 70vh; 
     overflow: auto; 
-    background: #333;
+    background-image: 
+        radial-gradient(#ffffff 1px, transparent 1px),
+        radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+    background-color: #1a1025; /* Темный фон со "звездами" */
     position: relative;
     cursor: grab;
 }
+
 #board { 
     position: absolute; 
-    width: 2000px; height: 2000px; /* Виртуальное поле */
+    width: 2000px; height: 2000px; 
     left: 50%; top: 50%; transform: translate(-50%, -50%);
 }
 
-/* Карточка на поле */
+/* КАРТОЧКИ */
 .card {
     width: 60px; height: 60px;
     position: absolute;
-    background: #555;
-    border: 1px solid #444;
-    box-sizing: border-box;
+    background: #2e2440; /* Цвет "стен" карты */
+    border-radius: 8px; /* Скругление */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     display: flex; justify-content: center; align-items: center;
-    font-size: 10px; color: #aaa;
+    box-sizing: border-box;
+    overflow: hidden; /* Чтобы туннели не вылезали за скругления */
 }
 
-/* Визуализация туннелей CSS-ом */
+/* Туннели - теперь это "светящиеся дорожки" */
 .tunnel-visual {
-    position: absolute; background: #eebb00; 
+    position: absolute; 
+    background: #ffd769; /* Теплый свет */
+    box-shadow: 0 0 10px #ffd769; /* Свечение */
+    z-index: 1;
 }
-.t-top { top: 0; left: 25px; width: 10px; height: 30px; }
-.t-bottom { bottom: 0; left: 25px; width: 10px; height: 30px; }
-.t-left { left: 0; top: 25px; width: 30px; height: 10px; }
-.t-right { right: 0; top: 25px; width: 30px; height: 10px; }
-.house { background: #000; border: 2px solid red; color: white; font-weight: bold; z-index: 10; }
-.block-card { background: #3a3a3a; border: 1px dashed #555; opacity: 0.7; }
+/* Размеры туннелей чуть шире для красоты */
+.t-top { top: 0; left: 20px; width: 20px; height: 35px; }
+.t-bottom { bottom: 0; left: 20px; width: 20px; height: 35px; }
+.t-left { left: 0; top: 20px; width: 35px; height: 20px; }
+.t-right { right: 0; top: 20px; width: 35px; height: 20px; }
 
-/* Рука игрока */
-#controls { height: 30vh; background: #111; padding: 10px; display: flex; flex-direction: column; align-items: center; }
-#hand { display: flex; gap: 10px; margin-bottom: 10px; }
+/* Центральный дом */
+.house { 
+    background: #443366; 
+    border: 2px solid #a74fff; 
+    z-index: 10; 
+    font-size: 0; /* Прячем текст */
+}
+.house::after {
+    content: "🐱"; /* Эмодзи кота */
+    font-size: 30px;
+    z-index: 5;
+}
+
+/* Заглушка (Крестик) */
+.block-card { 
+    background: transparent; 
+    border: 2px dashed #555; 
+    color: #555;
+    font-size: 20px; opacity: 0.5;
+}
+
+/* Интерфейс игрока (РУКА) */
+#controls { 
+    height: 30vh; 
+    background: #150c24; 
+    border-top: 3px solid #4a3b69;
+    padding: 10px; 
+    display: flex; flex-direction: column; align-items: center; 
+}
+
+#hand { display: flex; gap: 15px; margin-bottom: 15px; padding: 10px; overflow-x: auto; }
+
 .hand-card {
-    width: 60px; height: 60px; background: #666;
-    cursor: pointer; border: 2px solid transparent;
+    width: 70px; height: 70px; 
+    background: #2e2440;
+    border-radius: 8px;
+    cursor: pointer; 
+    border: 2px solid #4a3b69;
     position: relative;
+    transition: transform 0.2s;
+    flex-shrink: 0;
 }
-.hand-card.selected { border-color: #0f0; }
-.hand-card.action-card { background: #a33; color: white; font-size: 8px; text-align: center; padding: 2px; }
+.hand-card:hover { transform: translateY(-10px); }
 
-#status-bar { padding: 10px; background: #444; text-align: center; font-weight: bold; }
+.hand-card.selected { 
+    border-color: #ffd769; 
+    box-shadow: 0 0 15px #ffd769;
+}
 
-/* Призрак карты при наведении */
-.ghost { opacity: 0.5; pointer-events: none; border: 2px dashed yellow; }
+/* Карты действий в руке */
+.hand-card.action-card { 
+    background: linear-gradient(135deg, #6e45e2, #88d3ce);
+    color: white; 
+    font-size: 10px; 
+    display: flex; justify-content: center; align-items: center; text-align: center;
+    font-weight: bold; text-transform: uppercase;
+    padding: 5px;
+}
+
+#status-bar { 
+    padding: 10px; background: #2b1d3d; 
+    text-align: center; font-weight: bold; color: #ffd769;
+    border-bottom: 1px solid #4a3b69;
+}
+
+#actions { display: flex; gap: 10px; }
