@@ -1,1 +1,52 @@
+body { font-family: sans-serif; background: #222; color: #fff; margin: 0; overflow: hidden; }
+#login-screen { display: flex; flex-direction: column; align-items: center; margin-top: 100px; }
+#board-container { 
+    width: 100vw; height: 70vh; 
+    overflow: auto; 
+    background: #333;
+    position: relative;
+    cursor: grab;
+}
+#board { 
+    position: absolute; 
+    width: 2000px; height: 2000px; /* Виртуальное поле */
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+}
 
+/* Карточка на поле */
+.card {
+    width: 60px; height: 60px;
+    position: absolute;
+    background: #555;
+    border: 1px solid #444;
+    box-sizing: border-box;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 10px; color: #aaa;
+}
+
+/* Визуализация туннелей CSS-ом */
+.tunnel-visual {
+    position: absolute; background: #eebb00; 
+}
+.t-top { top: 0; left: 25px; width: 10px; height: 30px; }
+.t-bottom { bottom: 0; left: 25px; width: 10px; height: 30px; }
+.t-left { left: 0; top: 25px; width: 30px; height: 10px; }
+.t-right { right: 0; top: 25px; width: 30px; height: 10px; }
+.house { background: #000; border: 2px solid red; color: white; font-weight: bold; z-index: 10; }
+.block-card { background: #3a3a3a; border: 1px dashed #555; opacity: 0.7; }
+
+/* Рука игрока */
+#controls { height: 30vh; background: #111; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+#hand { display: flex; gap: 10px; margin-bottom: 10px; }
+.hand-card {
+    width: 60px; height: 60px; background: #666;
+    cursor: pointer; border: 2px solid transparent;
+    position: relative;
+}
+.hand-card.selected { border-color: #0f0; }
+.hand-card.action-card { background: #a33; color: white; font-size: 8px; text-align: center; padding: 2px; }
+
+#status-bar { padding: 10px; background: #444; text-align: center; font-weight: bold; }
+
+/* Призрак карты при наведении */
+.ghost { opacity: 0.5; pointer-events: none; border: 2px dashed yellow; }
