@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Черный Кот и Тоннели</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="login-screen">
+        <h1>Черный Кот</h1>
+        <input type="text" id="username" placeholder="Ваше имя">
+        <button onclick="joinGame()">Войти в игру</button>
+    </div>
 
+    <div id="game-screen" style="display:none;">
+        <div id="status-bar">Статус...</div>
+        
+        <!-- Игровое поле с прокруткой -->
+        <div id="board-container">
+            <div id="board"></div>
+        </div>
+
+        <!-- Панель управления -->
+        <div id="controls">
+            <div id="hand"></div>
+            <div id="actions">
+                <button onclick="rotateSelection()">Повернуть (R)</button>
+                <button onclick="passTurn()">Пропустить/Взять</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+</body>
+</html>
